@@ -46,6 +46,17 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                script {
+                    echo "Running tests..."
+                    dir("${REPO_DIR}/${FRONTEND_DIR}") {  // Navigate to the frontend folder
+                        bat 'npm run test -- --watchAll=false'  // Adjust as needed for your test command
+                    }
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 script {
