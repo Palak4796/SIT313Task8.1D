@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import App from '../App';  // Adjust the import based on your file structure
+import App from '../App.js';  // Adjust the import based on your file structure
 
 test('renders learn react link', () => {
   render(<App />);
