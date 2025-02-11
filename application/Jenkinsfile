@@ -11,12 +11,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    try {
-                        bat 'npm install' // Installs project dependencies
-                    } catch (Exception e) {
-                        currentBuild.result = 'FAILURE'
-                        throw e
-                    }
+                    bat 'npm install' // Installs project dependencies using Windows batch
                 }
             }
         }
@@ -24,12 +19,7 @@ pipeline {
         stage('Build React App') {
             steps {
                 script {
-                    try {
-                        bat 'npm run build' // Generates production-ready build
-                    } catch (Exception e) {
-                        currentBuild.result = 'FAILURE'
-                        throw e
-                    }
+                    bat 'npm run build' // Generates production-ready build using Windows batch
                 }
             }
         }
@@ -40,10 +30,7 @@ pipeline {
             echo "Build completed successfully!"
         }
         failure {
-            echo "Build failed! Please check the logs."
-        }
-        always {
-            cleanWs() // Cleans up the workspace after the build process
+            echo "Build failed!"
         }
     }
 }
