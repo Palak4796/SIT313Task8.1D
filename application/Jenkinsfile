@@ -4,14 +4,17 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Palak4796/SIT313Task8.1D.git' // Replace with your repo URL
+                script {
+                    // Force Git to use the cmd version on Windows
+                    bat 'git clone https://github.com/Palak4796/SIT313Task8.1D.git'
+                }
             }
         }
 
         stage('Install Dependencies') {
             steps {
                 script {
-                    bat 'npm install' // Installs project dependencies using Windows batch
+                    bat 'npm install'
                 }
             }
         }
@@ -19,7 +22,7 @@ pipeline {
         stage('Build React App') {
             steps {
                 script {
-                    bat 'npm run build' // Generates production-ready build using Windows batch
+                    bat 'npm run build'
                 }
             }
         }
