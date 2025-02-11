@@ -14,7 +14,10 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    bat 'npm install'
+                    // Navigate to the 'application' directory and run npm install
+                    dir('application') {
+                        bat 'npm install'
+                    }
                 }
             }
         }
@@ -22,7 +25,10 @@ pipeline {
         stage('Build React App') {
             steps {
                 script {
-                    bat 'npm run build'
+                    // Navigate to the 'application' directory and build the app
+                    dir('application') {
+                        bat 'npm run build'
+                    }
                 }
             }
         }
