@@ -1,12 +1,25 @@
 pipeline {
     agent any
 
+    environment {
+        GIT_REPO_URL = 'https://github.com/Palak4796/SIT313Task8.1D.git'
+        REPO_DIR = 'SIT313Task8.1D'
+    }
+
     stages {
-        stage('Checkout Code') {
+        stage('Checkout SCM') {
             steps {
                 script {
-                    // Force Git to use the cmd version on Windows
-                    bat 'git clone https://github.com/Palak4796/SIT313Task8.1D.git'
+                    // Check if the repo directory exists
+                    if (fileExists(REPO_DIR)) {
+                        echo "Repository already exists. Pulling latest changes..."
+                        dir(REPO_DIR) {
+                            bat 'git pull origin main'
+                        }
+                    } else {
+                        echo "Cloning repository..."
+                        bat "git clone ${GIT_REPO_URL}"
+                    }
                 }
             }
         }
@@ -14,10 +27,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Navigate to the 'application' directory and run npm install
-                    dir('application') {
-                        bat 'npm install'
-                    }
+                    echo "Installing dependencies..."
+                    // Install dependencies, e.g., using npm
+                    bat 'npm install'
                 }
             }
         }
@@ -25,21 +37,26 @@ pipeline {
         stage('Build React App') {
             steps {
                 script {
-                    // Navigate to the 'application' directory and build the app
-                    dir('application') {
-                        bat 'npm run build'
-                    }
+                    echo "Building React app..."
+                    // Build the React app
+                    bat 'npm run build'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    echo "Deploying application..."
+                    // Your deployment steps here
                 }
             }
         }
     }
 
     post {
-        success {
-            echo "Build completed successfully!"
-        }
         failure {
-            echo "Build failed!"
+            echo 'Build failed!'
         }
     }
 }
