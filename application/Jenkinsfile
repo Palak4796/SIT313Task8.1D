@@ -4,13 +4,13 @@ pipeline {
     environment {
         GIT_REPO_URL = 'https://github.com/Palak4796/SIT313Task8.1D.git'
         REPO_DIR = 'SIT313Task8.1D'
+        FRONTEND_DIR = 'application'  // Update this to your directory if different
     }
 
     stages {
         stage('Checkout SCM') {
             steps {
                 script {
-                    // Check if the repo directory exists
                     if (fileExists(REPO_DIR)) {
                         echo "Repository already exists. Pulling latest changes..."
                         dir(REPO_DIR) {
@@ -28,8 +28,9 @@ pipeline {
             steps {
                 script {
                     echo "Installing dependencies..."
-                    // Install dependencies, e.g., using npm
-                    bat 'npm install'
+                    dir("${REPO_DIR}/${FRONTEND_DIR}") {  // Navigate to the frontend folder
+                        bat 'npm install'
+                    }
                 }
             }
         }
@@ -38,8 +39,9 @@ pipeline {
             steps {
                 script {
                     echo "Building React app..."
-                    // Build the React app
-                    bat 'npm run build'
+                    dir("${REPO_DIR}/${FRONTEND_DIR}") {  // Navigate to the frontend folder
+                        bat 'npm run build'
+                    }
                 }
             }
         }
