@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Basic project information -->
     <groupId>com.example</groupId>
     <artifactId>your-project-name</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -12,10 +13,7 @@
     <name>your-project-name</name>
     <url>http://maven.apache.org</url>
 
-    <dependencies>
-        <!-- Add your dependencies here -->
-    </dependencies>
-
+    <!-- Frontend build configuration -->
     <build>
         <plugins>
             <!-- Frontend Maven Plugin -->
@@ -24,16 +22,16 @@
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.12</version> <!-- Updated plugin version -->
                 <configuration>
-                    <nodeVersion>v16.0.0</nodeVersion>
-                    <npmVersion>7.6.0</npmVersion>
+                    <nodeVersion>v16.0.0</nodeVersion> <!-- Node.js version -->
+                    <npmVersion>7.6.0</npmVersion>   <!-- npm version -->
                     <installDirectory>${project.build.directory}/frontend</installDirectory>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>install-node-and-npm</goal>
-                            <goal>install</goal>
-                            <goal>build</goal>
+                            <goal>install-node-and-npm</goal> <!-- Installs Node.js and npm -->
+                            <goal>install</goal>              <!-- Installs frontend dependencies -->
+                            <goal>build</goal>               <!-- Builds the frontend app -->
                         </goals>
                     </execution>
                 </executions>
@@ -41,6 +39,7 @@
         </plugins>
     </build>
 
+    <!-- Add repositories if needed -->
     <repositories>
         <repository>
             <id>central</id>
@@ -48,4 +47,48 @@
         </repository>
     </repositories>
 
+    <!-- Add frontend dependencies if necessary (optional) -->
+    <dependencies>
+        <!-- Add Java-related dependencies here -->
+        <!-- Example: Spring Boot -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Example of adding a plugin for frontend JavaScript libraries -->
+    <profiles>
+        <profile>
+            <id>frontend</id>
+            <build>
+                <plugins>
+                    <!-- Node.js and npm tasks -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <!-- Example task to build frontend assets -->
+                                        <exec executable="npm">
+                                            <arg value="run" />
+                                            <arg value="build" />
+                                        </exec>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
