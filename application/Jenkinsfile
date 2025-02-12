@@ -1,10 +1,10 @@
 pipeline {
-    agent any
+    agent { label 'Newnode' }  // Ensure the build runs on your new agent
 
     environment {
         GIT_REPO_URL = 'https://github.com/Palak4796/SIT313Task8.1D.git'
         REPO_DIR = 'SIT313Task8.1D'
-        FRONTEND_DIR = 'application'  // Update this to your directory if different
+        FRONTEND_DIR = 'application'  // Update if your directory name is different
     }
 
     stages {
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     echo "Installing dependencies..."
-                    dir("${REPO_DIR}/${FRONTEND_DIR}") {  // Navigate to the frontend folder
+                    dir("${REPO_DIR}/${FRONTEND_DIR}") {
                         bat 'npm install'
                     }
                 }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     echo "Building React app..."
-                    dir("${REPO_DIR}/${FRONTEND_DIR}") {  // Navigate to the frontend folder
+                    dir("${REPO_DIR}/${FRONTEND_DIR}") {
                         bat 'npm run build'
                     }
                 }
@@ -50,8 +50,8 @@ pipeline {
             steps {
                 script {
                     echo "Running tests..."
-                    dir("${REPO_DIR}/${FRONTEND_DIR}") {  // Navigate to the frontend folder
-                        bat 'npm run test -- --watchAll=false'  // Adjust as needed for your test command
+                    dir("${REPO_DIR}/${FRONTEND_DIR}") {
+                        bat 'npm run test -- --watchAll=false'
                     }
                 }
             }
@@ -61,7 +61,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying application..."
-                    // Your deployment steps here
+                    // Add deployment commands here
                 }
             }
         }
@@ -73,3 +73,4 @@ pipeline {
         }
     }
 }
+
