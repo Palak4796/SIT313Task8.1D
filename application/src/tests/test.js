@@ -1,3 +1,5 @@
+import 'whatwg-fetch'; // Polyfill for fetch API
+
 import { render, screen } from '@testing-library/react';
 import App from '../App.js';  // Adjust the import based on your file structure
 
@@ -6,3 +8,4 @@ test('renders learn react link', () => {
   const linkElement = screen.getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });
+
