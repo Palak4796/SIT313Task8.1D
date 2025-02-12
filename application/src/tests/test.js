@@ -1,4 +1,6 @@
 import 'whatwg-fetch'; // Polyfill for fetch API
+import 'text-encoding';
+
 
 import { render, screen } from '@testing-library/react';
 import App from '../App.js';  // Adjust the import based on your file structure
