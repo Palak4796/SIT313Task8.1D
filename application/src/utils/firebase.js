@@ -1,8 +1,7 @@
-const { TextEncoder } = require('util');
-
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { TextEncoder } from 'util'; // Consistent ES module import
 
 const firebaseConfig = {
   apiKey: "AIzaSyBu-VX3ZZ1O3kDgHr3NKeybFOzzq_7SraI",
@@ -15,10 +14,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig); 
 
-
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-
 export { db, storage };
+
 
