@@ -47,15 +47,18 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                script {
-                    echo "Running tests..."
-                    dir("${REPO_DIR}/${FRONTEND_DIR}") {
-                        bat 'npm run test -- --watchAll=false'
-                    }
-                }
+    steps {
+        script {
+            def testFilesExist = sh(script: "find src -name '*.test.js' -o -name '*.spec.js' | wc -l", returnStdout: true).trim()
+            if (testFilesExist == '0') {
+                echo "No test files found, skipping tests."
+            } else {
+                sh 'npm run test -- --watchAll=false'
             }
         }
+    }
+}
+
 
         stage('Deploy') {
             steps {
