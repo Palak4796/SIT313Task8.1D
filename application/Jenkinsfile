@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'Newnode' }  // Ensure the build runs on your new agent
+    agent any  // Ensure the build runs on your new agent
 
     environment {
         GIT_REPO_URL = 'https://github.com/Palak4796/SIT313Task8.1D.git'
