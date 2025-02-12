@@ -47,18 +47,20 @@ pipeline {
         }
 
         stage('Test') {
-    steps {
-        script {
-            def testFilesExist = bat(script: "find src -name '*.test.js' -o -name '*.spec.js' | wc -l", returnStdout: true).trim()
-            if (testFilesExist == '0') {
-                echo "No test files found, skipping tests."
-            } else {
-                sh 'npm run test -- --watchAll=false'
+            steps {
+                script {
+                    def testCount = bat(script: 'powershell -command "& { (Get-ChildItem -Path src -Recurse -Include *.test.js, *.spec.js).Count }"', returnStdout: true).trim()
+                    
+                    if (testCount == '0') {
+                        echo "No test files found, skipping tests."
+                    } else {
+                        dir("${REPO_DIR}/${FRONTEND_DIR}") {
+                            bat 'npm run test -- --watchAll=false'
+                        }
+                    }
+                }
             }
         }
-    }
-}
-
 
         stage('Deploy') {
             steps {
@@ -76,4 +78,3 @@ pipeline {
         }
     }
 }
-
