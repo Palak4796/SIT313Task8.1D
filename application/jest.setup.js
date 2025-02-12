@@ -1,1 +1,5 @@
-global.TextEncoder = require('util').TextEncoder;
+import { TextEncoder, TextDecoder } from 'util';
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
