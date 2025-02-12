@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'newnode' }  // Use 'newnode' instead of 'any'
 
     environment {
         GIT_REPO_URL = 'https://github.com/Palak4796/SIT313Task8.1D.git'
