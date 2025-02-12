@@ -4,11 +4,12 @@ import { TextEncoder, TextDecoder } from 'text-encoding';
 import { render, screen } from '@testing-library/react';
 import App from '../App';  // Adjust the import based on your file structure
 
+global.TextEncoder = require("util").TextEncoder;
 
 
 // Make sure global objects are available in your test environment
-global.TextEncoder = require('text-encoding').TextEncoder;
-global.TextDecoder = require('text-encoding').TextDecoder;
+global.TextEncoder = require("util").TextEncoder;
+global.TextDecoder = require("util").TextDecoder;
 
 test('renders learn react link', () => {
   render(<App />);
