@@ -46,8 +46,9 @@
     "jest-junit": "^16.0.0"
   },
   "jest": {
-  "testEnvironment": "jsdom",
+  "testEnvironment": "node",
   "setupFiles": ["<application>/jest.setup.js"]
 }
+
   }
 }
