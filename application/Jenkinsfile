@@ -1,11 +1,10 @@
 pipeline {
-    agent any  // Use 'newnode' instead of 'any'
+    agent { label 'Newnode' }  // Ensure the build runs on your new agent
 
     environment {
         GIT_REPO_URL = 'https://github.com/Palak4796/SIT313Task8.1D.git'
         REPO_DIR = 'SIT313Task8.1D'
         FRONTEND_DIR = 'application'  // Update if your directory name is different
-        NETLIFY_SITE_ID = 'https://67ac49d6c9013e3df76b2046--splendid-gingersnap-26c75b.netlify.app/'  // Replace with your actual Netlify Site ID
     }
 
     stages {
@@ -15,8 +14,7 @@ pipeline {
                     if (fileExists(REPO_DIR)) {
                         echo "Repository already exists. Pulling latest changes..."
                         dir(REPO_DIR) {
-                            // Attempt to pull with automatic conflict resolution
-                            bat 'git pull origin main --strategy=recursive -X theirs || exit 0'  // Automatically resolve conflicts
+                            bat 'git pull origin main'
                         }
                     } else {
                         echo "Cloning repository..."
@@ -64,21 +62,11 @@ pipeline {
             }
         }
 
-        stage('Deploy to Netlify') {
-            environment {
-                NETLIFY_AUTH_TOKEN = credentials('NETLIFY_AUTH_TOKEN')  // Add Netlify token in Jenkins credentials
-            }
+        stage('Deploy') {
             steps {
                 script {
-                    echo "Deploying application to Netlify..."
-                    
-                    // Ensure Netlify CLI is installed
-                    bat 'npm install -g netlify-cli'
-                    
-                    // Deploy to Netlify
-                    dir("${REPO_DIR}/${FRONTEND_DIR}") {
-                        bat 'netlify deploy --dir=build --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID'
-                    }
+                    echo "Deploying application..."
+                    // Add deployment commands here
                 }
             }
         }
@@ -87,9 +75,6 @@ pipeline {
     post {
         failure {
             echo 'Build failed!'
-        }
-        success {
-            echo 'Build and deployment successful! 🎉'
         }
     }
 }
