@@ -44,6 +44,10 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "jest-junit": "^16.0.0"
-  }
+  },"jest": {
+  "testMatch": ["**/?(*.)+(test).js?(x)"]
+}
+
+
 
 }
